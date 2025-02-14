@@ -1,0 +1,39 @@
+nome = input("Digite seu nome: ")
+idade = int(input("Digite sua idade: "))
+while True:
+    if idade >= 101:
+        print("Digite uma idade valida")
+        break
+    else:
+        break
+
+peso = float(input("Digite seu peso: "))
+altura = float(input("Digite sua altura: "))
+
+imc = peso / (altura ** 2)
+
+if imc < 16:
+    print(f"procure se cuidar {nome}, você está muito abaixo do peso ideal!")
+elif imc >= 16 and imc < 17:
+    print(f"Você está abaixo do peso, {nome}!")
+elif imc >= 17 and imc < 18.5:
+    print(f"{nome}, você está só um pouco abaixo do peso ideal!")
+elif imc >= 18.5 and imc < 25:
+    print(f"Você está no peso ideal, continue assim, {nome}!")
+elif imc >= 25 and imc < 30:
+    print(f"Você está com sobrepeso, {nome}!")
+elif imc >= 30 and imc < 35:
+    print(f"Você está com obesidade grau I, começe a se preocupar, {nome}!")
+elif imc >= 35 and imc < 40:
+    print(f"Você está com obesidade grau II, se preocupe, {nome}!")
+elif imc > 40:
+    print(f"Você está com obesidade grau III, busque se cuidar, {nome}!")
+
+print(f"""
+Seu IMC é {imc:.2f}
+Sendo seu peso: {peso} e
+altura: {altura}
+
+Seu nome é: {nome}
+Sua idade é: {idade}
+""")
