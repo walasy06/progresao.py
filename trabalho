@@ -1,39 +1,66 @@
-nome = input("Digite seu nome: ")
-idade = int(input("Digite sua idade: "))
+# Lista de produtos disponíveis (nome, preço)
+produtos = [
+    ("Maçã", 2.5),
+    ("Banana", 1.8),
+    ("Laranja", 3.0),
+    ("Uva", 5.0)
+]
+
+# Adicionar novos produtos antes de iniciar as compras
 while True:
-    if idade >= 101:
-        print("Digite uma idade valida")
+    opcao = input("Deseja adicionar um novo produto? (sim/não): ").strip().lower()
+    if opcao == "não":
         break
+    elif opcao == "sim":
+        nome = input("Digite o nome do produto: ").strip().capitalize()
+        if any(nome == produto[0] for produto in produtos):
+            print("Produto já existe na lista!")
+            continue
+        try:
+            preco = float(input("Digite o preço do produto: ").replace(",", "."))
+            produtos.append((nome, preco))
+            print(f"{nome} adicionado com sucesso!")
+        except ValueError:
+            print("Preço inválido! Use apenas números.")
+
+# Lista para armazenar o carrinho de compras
+carrinho = []
+
+while True:
+    print("\nProdutos disponíveis:")
+    for i, produto in enumerate(produtos):
+        print(f"{i + 1} - {produto[0]}: R$ {produto[1]:.2f}")
+    
+    opcao = input("Escolha um produto pelo número (ou 'sair' para finalizar): ")
+    
+    if opcao.lower() == "sair":
+        break
+    
+    if opcao.isdigit():
+        indice = int(opcao) - 1
+        if 0 <= indice < len(produtos):
+            carrinho.append(produtos[indice])
+            print(f"{produtos[indice][0]} adicionado ao carrinho!")
+        else:
+            print("Número inválido! Escolha um produto da lista.")
     else:
-        break
+        print("Entrada inválida! Digite um número válido.")
 
-peso = float(input("Digite seu peso: "))
-altura = float(input("Digite sua altura: "))
+# Cálculo do total da compra
+total = sum(preco for _, preco in carrinho)
 
-imc = peso / (altura ** 2)
+desconto = 0.0
+if total > 15:
+    desconto = total * 0.1  # 10% de desconto para compras acima de R$ 15,00
 
-if imc < 16:
-    print(f"procure se cuidar {nome}, você está muito abaixo do peso ideal!")
-elif imc >= 16 and imc < 17:
-    print(f"Você está abaixo do peso, {nome}!")
-elif imc >= 17 and imc < 18.5:
-    print(f"{nome}, você está só um pouco abaixo do peso ideal!")
-elif imc >= 18.5 and imc < 25:
-    print(f"Você está no peso ideal, continue assim, {nome}!")
-elif imc >= 25 and imc < 30:
-    print(f"Você está com sobrepeso, {nome}!")
-elif imc >= 30 and imc < 35:
-    print(f"Você está com obesidade grau I, começe a se preocupar, {nome}!")
-elif imc >= 35 and imc < 40:
-    print(f"Você está com obesidade grau II, se preocupe, {nome}!")
-elif imc > 40:
-    print(f"Você está com obesidade grau III, busque se cuidar, {nome}!")
+total_final = total - desconto
 
-print(f"""
-Seu IMC é {imc:.2f}
-Sendo seu peso: {peso} e
-altura: {altura}
+# Exibir detalhes da compra
+print("\nResumo da compra:")
+for item, preco in carrinho:
+    print(f"{item}: R$ {preco:.2f}")
 
-Seu nome é: {nome}
-Sua idade é: {idade}
-""")
+print(f"Total: R$ {total:.2f}")
+if desconto > 0:
+    print(f"Desconto aplicado: R$ {desconto:.2f}")
+print(f"Total a pagar: R$ {total_final:.2f}"
